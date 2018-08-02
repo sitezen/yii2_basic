@@ -56,7 +56,9 @@ class TripSearch extends \app\models\Trip
 
         if(empty($trip_ids)) return null;
 
-        $query = self::find()->where('`id` IN (' . implode(',', $trip_ids) . ')') ->cache(60);
+        $query = self::find()->where('`id` IN (' . implode(',', $trip_ids) . ')')
+            ->andWhere(['corporate_id' => self::CORPORATE_ID])
+            ->cache(60);
 
         $provider = new ActiveDataProvider([
             'query' => $query,
